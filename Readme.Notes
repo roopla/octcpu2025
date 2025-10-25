@@ -1,0 +1,40 @@
+Note:- Start patching with last node in a RAC cluster.
+---------------------------------------------------------------------------------
+Step1 )Make sure /u02 mount point has atlreast 15G free space
+
+Step 2) make sure environment variables PATCH_DIR, GI_HOME, ORACLE_HOME are pointing correctly in the following seed files
+grid_user_config.bash
+oracle_user_config.bash
+----------------------------------------------------------------------------------
+
+
+1) as a oracle user: unzip_CPU_patches.bash 
+
+2) Please run these ahead of the time to check any conflicts:
+
+as a grid user:  :  check_conflict_as_grid.bash
+as a oracle user :  check_conflict_as_oracle.bash
+
+3) as a oracle user: stop_all_dbs_as_oracle.bash  ( you might get error saying file exist, you can rename the file created already)
+
+4) as a root user : pre_patch_step_as_root.bash
+
+5) as a grid user : patch_CPU_as_grid.bash
+
+6) as a grid user: patch_JDK_as_grid.bash
+
+7) as a oracle user: patch_CPU_as_oracle.bash
+
+8) as a root user: post_patch_step_as_root.bash
+
+9) as a oracle user: patch_OJVM_as_oracle.bash
+
+10) as a oracle user: patch_JDK_as_oracle.bash
+
+11) as a oracle user: start_all_dbs_as_oracle.bash
+
+12) as a oracle user: datapatch.bash   <---- Only on last node.
+
+13) as a oracle user: utlrp.bash  <---- Only on last node.
+
+and last step ahfctl tool upgrades which can be done on the same day or next day
